@@ -19,8 +19,10 @@
     "build:run": "npm-run-all build start:electron",
     "build:electron": "webpack --config webpack/electron.webpack.ts --mode=production",
     "build:react": "webpack --config webpack/react.webpack.ts --mode=production",
-    "package": "npm-run-all build package:dist",
-    "package:dist": "electron-builder --dir"
+    "package": "npm-run-all build package:build",
+    "package:release": "npm-run-all build package:dist",
+    "package:build": "electron-builder --dir",
+    "package:dist": "electron-builder"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.3",
@@ -57,19 +59,22 @@
   },
   "build": {
     "appId": "com.mln.${name}",
-    "productName": "Material UI Electron Quick Start",
+    "productName": "Material UI Electron Quickstart",
     "mac": {
-      "category": "melon.electron.start"
+      "category": "melon.electron",
+      "type": "distribution",
+      "target": [
+        "pkg",
+        "zip",
+        "dmg"
+      ]
     },
     "directories": {
-      "output": "packages"
+      "output": "release"
     },
     "files": [
       "package.json",
       "dist/**"
-    ],
-    "dmg": {
-      "title": "App Title"
-    }
+    ]
   }
 }

@@ -1,6 +1,22 @@
 # Material UI & Electron Quickstart
 
-## css loader & less loader
+## Install
+
+### Npm
+
+```shell
+$ npm install
+```
+
+### Yarn
+
+```shell
+$ yarn install
+```
+
+## Loader
+
+### css loader & less loader
 
 ```shell
 $ yarn add -D css-loader less less-loader style-loader
@@ -30,7 +46,7 @@ module.exports = {
 }
 ```
 
-## font loader
+### font loader
 
 webpack.config.js
 ```javascript
@@ -50,66 +66,53 @@ module.exports = {
 }
 ```
 
-## MacOS & Package to dmg/pkg
+## Package
 
-### Dmg
-
-```shell
-$ yarn global add appdmg
-```
-
-Directory Structure
-
-```text
-dists->
-	-- MyApp.app
-	-- pack.json
-```
-
-Pack.json
+### Package to dmg/pkg for MacOS
 
 ```json
+// pakcage.json
 {
-  "title": "MyApp",
-  "contents": [
-    { "x": 448, "y": 144, "type": "link", "path": "/Applications" },
-    { "x": 192, "y": 144, "type": "file", "path": "./Material UI Electron Quick Start.app" }
-  ],
-  "window": {
-      "size": {
-          "width": 640,
-          "height": 480
-      }
+  // other
+  "build": {
+    "appId": "com.mln.${name}",
+    "productName": "Material UI Electron Quickstart",
+    "mac": {
+      "category": "melon.electron",
+      "type": "distribution",
+      "target": [
+        "pkg",
+        "dmg",
+        "zip"
+      ]
+    },
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "package.json",
+      "dist/**"
+    ]
   },
-  "format": "UDBZ"
+  "script": {
+    // other
+    "build": "npm-run-all build:electron build:react",
+    "build:run": "npm-run-all build start:electron",
+    "build:electron": "webpack --config webpack/electron.webpack.ts --mode=production",
+    "build:react": "webpack --config webpack/react.webpack.ts --mode=production",
+    "package": "npm-run-all build package:build",
+    "package:release": "npm-run-all build package:dist",
+    "package:build": "electron-builder --dir",
+    "package:dist": "electron-builder"
+  }
+  // other
 }
 ```
 
 ```shell
-$ appdmg ./dists/pack.json ./dists/MyApp.dmg
+$ yarn package // for unpack
+$ yarn package:release // for release
 ```
 
-format
 
-```text
-UDRW - UDIF read/write image
-UDRO - UDIF read-only image
-UDCO - UDIF ADC-compressed image
-UDZO - UDIF zlib-compressed image
-UDBZ - UDIF bzip2-compressed image (OS X 10.4+ only)
-UFBI - UDIF entire image with MD5 checksum
-UDTO - DVD/CD-R master for export
-UDSP - SPARSE (grows with content)
-UDSB - SPARSEBUNDLE (grows with content; bundle-backed)
-```
-
-### Pkg
-
-```shell
-$ pkgbuild --install-location /Applications --component ./packages/mac-arm64/Material\ UI\ Electron\ Quick\ Start.app ./packages/MyApp.pkg
-```
-
-```shell
-$ python quickpkg ./packages/mac-arm64/Material\ UI\ Electron\ Quick\ Start.app --output ./packages/MyApp.pkg
-```
 
