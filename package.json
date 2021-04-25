@@ -7,7 +7,7 @@
     "url": "http://www.meloncocoo.com"
   },
   "private": true,
-  "description": "A Ant-Design Electron React Quick Start",
+  "description": "Material UI Electron Quick Start",
   "main": "./dist/main.js",
   "scripts": {
     "dev": "npm-run-all -p dev:react electron:serve",
