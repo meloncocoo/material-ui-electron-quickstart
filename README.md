@@ -49,3 +49,67 @@ module.exports = {
   // other config
 }
 ```
+
+## MacOS & Package to dmg/pkg
+
+### Dmg
+
+```shell
+$ yarn global add appdmg
+```
+
+Directory Structure
+
+```text
+dists->
+	-- MyApp.app
+	-- pack.json
+```
+
+Pack.json
+
+```json
+{
+  "title": "MyApp",
+  "contents": [
+    { "x": 448, "y": 144, "type": "link", "path": "/Applications" },
+    { "x": 192, "y": 144, "type": "file", "path": "./Material UI Electron Quick Start.app" }
+  ],
+  "window": {
+      "size": {
+          "width": 640,
+          "height": 480
+      }
+  },
+  "format": "UDBZ"
+}
+```
+
+```shell
+$ appdmg ./dists/pack.json ./dists/MyApp.dmg
+```
+
+format
+
+```text
+UDRW - UDIF read/write image
+UDRO - UDIF read-only image
+UDCO - UDIF ADC-compressed image
+UDZO - UDIF zlib-compressed image
+UDBZ - UDIF bzip2-compressed image (OS X 10.4+ only)
+UFBI - UDIF entire image with MD5 checksum
+UDTO - DVD/CD-R master for export
+UDSP - SPARSE (grows with content)
+UDSB - SPARSEBUNDLE (grows with content; bundle-backed)
+```
+
+### Pkg
+
+```shell
+$ pkgbuild --install-location /Applications --component ./packages/mac-arm64/Material\ UI\ Electron\ Quick\ Start.app ./packages/MyApp.pkg
+```
+
+```shell
+$ python quickpkg ./packages/mac-arm64/Material\ UI\ Electron\ Quick\ Start.app --output ./packages/MyApp.pkg
+```
+

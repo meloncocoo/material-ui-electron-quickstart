@@ -67,6 +67,9 @@
     "files": [
       "package.json",
       "dist/**"
-    ]
+    ],
+    "dmg": {
+      "title": "App Title"
+    }
   }
 }
