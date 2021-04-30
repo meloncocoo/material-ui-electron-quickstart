@@ -1,0 +1,80 @@
+{
+  "name": "material-ui-electron-quickstart",
+  "version": "0.0.1",
+  "author": {
+    "email": "nimda_wen@hotmail.com",
+    "name": "Melon Cocoo",
+    "url": "http://www.meloncocoo.com"
+  },
+  "private": true,
+  "description": "Material UI Electron Quick Start",
+  "main": "./dist/main.js",
+  "scripts": {
+    "dev": "npm-run-all -p dev:react electron:serve",
+    "dev:electron": "cross-env NODE_ENV=development webpack --config webpack/electron.webpack.ts --mode=development && npm run start:electron",
+    "dev:react": "cross-env NODE_ENV=development webpack serve --config webpack/react.webpack.ts --mode=development",
+    "electron:serve": "wait-on http-get://localhost:4000/ && npm run dev:electron",
+    "start:electron": "electron .",
+    "build": "npm-run-all build:electron build:react",
+    "build:run": "npm-run-all build start:electron",
+    "build:electron": "webpack --config webpack/electron.webpack.ts --mode=production",
+    "build:react": "webpack --config webpack/react.webpack.ts --mode=production",
+    "package": "npm-run-all build package:build",
+    "package:release": "npm-run-all build package:dist",
+    "package:build": "electron-builder --dir",
+    "package:dist": "electron-builder"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "fontsource-roboto": "^4.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "cross-env": "^7.0.3",
+    "css-loader": "^5.2.4",
+    "electron": "^12.0.4",
+    "electron-builder": "^22.10.5",
+    "eslint": "^7.24.0",
+    "eslint-config-prettier": "^8.2.0",
+    "eslint-plugin-react": "^7.23.2",
+    "html-webpack-plugin": "^5.3.1",
+    "less": "^4.1.1",
+    "less-loader": "^8.1.1",
+    "npm-run-all": "^4.1.5",
+    "process": "^0.11.10",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^9.0.0",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4",
+    "wait-on": "^5.3.0",
+    "webpack": "^5.34.0",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "build": {
+    "appId": "com.mln.${name}",
+    "productName": "Material UI Electron Quickstart",
+    "mac": {
+      "category": "melon.electron",
+      "type": "distribution",
+      "target": [
+        "pkg",
+        "zip",
+        "dmg"
+      ]
+    },
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "package.json",
+      "dist/**"
+    ]
+  }
+}
