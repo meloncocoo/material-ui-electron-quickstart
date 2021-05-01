@@ -5,3 +5,9 @@ packages
 release
 
 .DS_Store
+**/lib
+**/bin
+src/py/include/
+src/py/pyvenv.cfg
+.vscode
+yarn-error.log
