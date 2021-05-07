@@ -5,7 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import { Box, Button, Container, Input } from '@material-ui/core';
+import { Box, Button, Container, TextField } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,7 +22,14 @@ export default function App(): JSX.Element {
   const classes = useStyles();
 
   const handleClick = () => {
-    alert('handle click')
+    fetch(`http://localhost:5001/`).then((data) => {
+      return data.text()
+    }).then((text) => {
+      console.log('data: ', text)
+      alert(text)
+    }).catch(e => {
+      console.log(e)
+    })
   }
 
   return (
@@ -48,7 +55,7 @@ export default function App(): JSX.Element {
           }
         </Box>
         <Box my={3}>
-          <Input placeholder="input text" />
+          <TextField label="Standard secondary" color="secondary" />
           <Button variant="contained" size="small" color="primary" onClick={handleClick} >API</Button>
         </Box>
       </Container>
