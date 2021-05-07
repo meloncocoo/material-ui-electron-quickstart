@@ -1,8 +1,20 @@
 import { app, BrowserWindow } from 'electron'
 import * as path from 'path'
 import * as url from 'url'
+import { Options, PythonShell } from 'python-shell'
 
 let mainWindow: Electron.BrowserWindow | null
+
+function sendToPython() {
+  const options: Options = {
+    mode: 'text',
+  }
+
+  PythonShell.run('./src/py/server.py', options, (err, results) => {
+    if (err) throw err
+    console.log('Python response: ', results)
+  })
+}
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -30,6 +42,8 @@ function createWindow() {
       })
     )
   }
+
+  sendToPython()
 
   mainWindow.on('closed', () => {
     mainWindow = null
