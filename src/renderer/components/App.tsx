@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Box, Button, Container, TextField } from '@material-ui/core';
+import request from '../utils/request';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,14 +23,15 @@ export default function App(): JSX.Element {
   const classes = useStyles();
 
   const handleClick = () => {
-    fetch(`http://localhost:5001/`).then((data) => {
-      return data.text()
-    }).then((text) => {
-      console.log('data: ', text)
-      alert(text)
-    }).catch(e => {
-      console.log(e)
-    })
+    request
+      .get('/')
+      .then(response => {
+        console.log(response)
+        alert(response)
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 
   return (

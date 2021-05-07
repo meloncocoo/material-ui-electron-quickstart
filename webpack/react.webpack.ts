@@ -8,7 +8,15 @@ const rootPath = path.resolve(__dirname, "..")
 const config = {
   ...baseConfig({
     resolve: {
-      mainFields: ['main', 'module', 'browser'],
+      mainFields: ['browser', 'module', 'main'],
+      fallback: {
+        "zlib": require.resolve("browserify-zlib"),
+        "http": require.resolve("stream-http"),
+        "https": require.resolve("https-browserify"),
+        "util": require.resolve("util/"),
+        "assert": require.resolve("assert/"),
+        "stream": require.resolve("stream-browserify"),
+      }
     },
     entry: path.resolve(rootPath, 'src/renderer', 'index.tsx'),
     target: ['web', 'electron-renderer'],
@@ -46,6 +54,9 @@ const config = {
           type: 'asset/resource',
         },
       ],
+    },
+    node: {
+      global: true,
     },
     plugins: [
       new HtmlWebpackPlugin(),
