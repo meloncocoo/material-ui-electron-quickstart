@@ -20,6 +20,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1100,
     height: 700,
+    title: 'Fitness',
     backgroundColor: '#f2f2f2',
     webPreferences: {
       nodeIntegration: true, // 是否集成 Nodejs
